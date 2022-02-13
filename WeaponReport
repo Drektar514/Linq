@@ -1,0 +1,53 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace WeaponReport
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Soldier> soldiers = new List<Soldier>
+            {
+                new Soldier("Андрей","Танкист","Солдат",8),
+                new Soldier("Алексей","Лётчик","Лейтенант",11),
+                new Soldier("Сергей","Лётчик","Солдат",8),
+                new Soldier("Роман","Танкист","Командир",23),
+                new Soldier("Олег","Пехотинец","Капрал",19),
+                new Soldier("Дмитрий","Пехотинец","Солдат",8),
+                new Soldier("Евгений","Танкист","Лейтенант",11)
+            };
+
+            var nameAndRankSolders = from Soldier soldier in soldiers
+                                 select new
+                                 {
+                                     Name = soldier.Name,
+                                     Rank = soldier.Rank
+                                 };
+
+            foreach (var nameAndRankSolder in nameAndRankSolders)
+            {
+                Console.WriteLine($"{nameAndRankSolder.Name} - {nameAndRankSolder.Rank}.");
+            }
+
+            Console.ReadKey();
+        }
+    }
+
+    class Soldier
+    {
+        public string Name { get; private set; }
+        public string Weapon { get; private set; }
+        public string Rank { get; private set; }
+        public int TermService { get; private set; }
+
+        public Soldier(string name, string weapon, string rank, int termService)
+        {
+            Name = name;
+            Weapon = weapon;
+            Rank = rank;
+            TermService = termService;
+        }
+    }
+}
