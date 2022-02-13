@@ -1,0 +1,42 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace CombiningTroops
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Soldier> squad1 = new List<Soldier>
+            {
+                new Soldier("Андрей","Бойков"),
+                new Soldier("Алексей","Денисов"),
+                new Soldier("Константин","Давыдов"),
+                new Soldier("Сергей","Азанов"),
+                new Soldier("Михаил","Бирюзов")
+            };
+            List<Soldier> squad2 = new List<Soldier>
+            {
+                new Soldier("Борис","Филипов"),
+                new Soldier("Михаил","Гудков"),
+                new Soldier("Вадим","Жирков"),
+                new Soldier("Евгений","Белков")
+            };
+            squad2 = squad2.Union(squad1.Where(soldier => soldier.SecondName.StartsWith("Б"))).ToList();
+            squad1 = squad1.Where(soldier => !soldier.SecondName.StartsWith("Б")).ToList();
+        }
+    }
+
+    class Soldier
+    {
+        public string Name { get; private set; }
+        public string SecondName { get; private set; }
+
+        public Soldier(string name, string secondName)
+        {
+            Name = name;
+            SecondName = secondName;
+        }
+    }
+}
