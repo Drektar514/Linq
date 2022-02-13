@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace AnarhyInHospital
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int userInput;
+            string userDisease;
+            bool isNumber;
+            bool isWork = true;
+            List<SickPatient> sortedPatient = new List<SickPatient>();
+            
+            List<SickPatient> patients = new List<SickPatient>()
+            {
+                new SickPatient("Башков Иван Сергеевич",18,"Атит"),
+                new SickPatient("Дроздов Константин Игоревич",37,"Грипп"),
+                new SickPatient("Яковлева Анастасия Валерьевна",26,"Грипп"),
+                new SickPatient("Азанов Дмитрий Рустамович",67,"Опухоль"),
+                new SickPatient("Комарова Елена Григорьевна",8,"Атит"),
+                new SickPatient("Трубочистов Кирилл Захарович",45,"Грипп"),
+                new SickPatient("Шумакова Екатерина Александровна",28,"Перелом"),
+                new SickPatient("Стряпоухин Шамиль Алексеевич",19,"Перелом"),
+                new SickPatient("Кукурузова Ксения Дмитриевна",73,"Опухоль"),
+                new SickPatient("Тугодумов Влад Андреевич",35,"Атит"),
+                new SickPatient("Глазнова Алла Борисовна",29,"Грипп"),
+                new SickPatient("Бездомов Филипп Владиславович",20,"Перелом"),
+                new SickPatient("Пырнов Пётр Иванович",54,"Опухоль")
+            };
+            while (isWork)
+            {
+                Console.WriteLine("Выберите метод сортировки: \n1 - ФИО \n2 - Возраст\n3 - Вывести с определённым заболеванием");
+                isNumber = Int32.TryParse(Console.ReadLine(), out userInput);
+                if (isNumber) 
+                {
+
+                    switch (userInput)
+                    {
+                        case 1:
+                            sortedPatient = patients.OrderBy(patient => patient.FullName).ToList();
+                            break;
+                        case 2:
+                            sortedPatient = patients.OrderBy(patient => patient.Age).ToList();
+                            break;
+                        case 3:
+                            Console.WriteLine("Введите название болезни: ");
+                            userDisease = Console.ReadLine();
+                            sortedPatient = patients.Where(patient => patient.Disease.StartsWith(userDisease)).ToList();
+                            break;
+                        default:
+                            Console.WriteLine("Введено некорректное число");
+                            break;
+                    }
+                    foreach (var patient in sortedPatient)
+                    {
+                        patient.ShowInfo();
+                    }
+                }
+                
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+
+    class SickPatient
+    {
+        public string FullName { get; private set; }
+        public int Age { get; private set; }
+        public string Disease { get; private set; }
+
+        public SickPatient(string fullName, int age, string disease)
+        {
+            FullName = fullName;
+            Age = age;
+            Disease = disease;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Имя заболевшего - {FullName}, возраст - {Age}, заболевание - {Disease}.");
+        }
+    }
+}
