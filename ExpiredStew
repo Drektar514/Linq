@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ExpiredStew
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int thisYear = 2021;
+            List<Stew> expiredStews = new List<Stew>();
+
+            List<Stew> stews = new List<Stew>
+            {
+                new Stew("Куринная тушёнка",2005,10),
+                new Stew("Свинная тушёнка",2015,20),
+                new Stew("Говяжья тушёнка",1999,20),
+                new Stew("Килька в томате",2013,9),
+                new Stew("Бычки в томате",2013,5),
+                new Stew("Шпроты",2018,4)
+            };
+
+            expiredStews = stews.Where(stew => stew.ProductionYear + stew.ShelfLife <= thisYear).ToList();
+            foreach (var stew in expiredStews)
+            {
+                stew.ShowInfo();
+            }
+        }
+    }
+        
+   public class Stew
+    {
+        public string Name { get; private set; }
+        public int ProductionYear { get; private set; }
+        public int ShelfLife { get; private set; }
+
+        public Stew(string name, int productionYear, int shelfLife)
+        {
+            Name = name;
+            ProductionYear = productionYear;
+            ShelfLife = shelfLife;
+        }
+        
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Name} - просрочена");
+        }
+    }
+}
