@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Amnesty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Criminal> criminals = new List<Criminal>
+            {
+                new Criminal("Райдер Иван Васильевич","Убийца"),
+                new Criminal("Божечкин Александр Сергеевич","Насильник"),
+                new Criminal("Миранова Татьяна Сергеевна","Антипровительственное"),
+                new Criminal("Лунова Ирина Анатольевна","Убийца"),
+                new Criminal("Свенов Сергей Витальевич","Антипровительственное"),
+                new Criminal("Романов Борис Игнатьевич","Насильник"),
+                new Criminal("Апалуза Светлана Васильевна","Антипровительственное"),
+            };
+
+            foreach (var criminal in criminals)
+            {
+                criminal.ShowInfo();
+            }
+            
+            Console.WriteLine();
+
+            criminals = criminals.Where(criminal => !criminal.Crime.StartsWith("Антипровительственное")).ToList();
+
+            foreach (var criminal in criminals)
+            {
+                criminal.ShowInfo();
+            }
+
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+
+    class Criminal
+    {
+        public string NickName { get; private set; }
+        public string Crime { get; private set; }
+
+        public Criminal(string fullName, string crime)
+        {
+            NickName = fullName;
+            Crime = crime;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Кличка преступника - {NickName}, его преступление - {Crime}.");
+        }
+    }
+}
